@@ -7,6 +7,7 @@ html {
 }
 
 body {
+    background-color: rgb(29, 67, 124);
     margin: 0;
     padding: 20px;
     display: flex;
@@ -14,6 +15,12 @@ body {
     align-items: center;
     justify-content: center;
     gap: 10px;
+   font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif
+}
+
+header h1 {
+    color: #bbdaf7;
+    font-size: 3rem;
 }
 
 h1 span,
@@ -30,9 +37,6 @@ header {
     width: 100%;
     justify-content: space-evenly;
     align-items: center;
-}
-
-header .search {
 }
 
 header .search .search-input {
@@ -87,7 +91,6 @@ h2 button:hover {
 }
 
 .location-list {
-    /* background-color: greenyellow; */
     padding-inline: 10px;
     flex: 1;
     overflow: auto;
@@ -107,6 +110,7 @@ h2 button:hover {
 
 .location-text {
     flex: 1;
+    color: #ffffff;
 }
 
 .location-buttons {
@@ -114,6 +118,11 @@ h2 button:hover {
     display: flex;
     justify-content: space-evenly;
     align-items: center;
+    gap: 10px;
+}
+
+.location-preview{
+    background-color: rgb(12, 54, 68);
 }
 
 .location-preview h1 {
@@ -126,6 +135,33 @@ h2 button:hover {
     font-size: 1rem;
     font-weight: 200;
 }
+
+button {
+	box-shadow:inset 0px 1px 0px 0px #bbdaf7;
+	background:linear-gradient(to bottom, #79bbff 5%, #378de5 100%);
+	background-color:#79bbff;
+	border-radius:6px;
+	border:1px solid #84bbf3;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	font-family:Arial;
+	font-size:15px;
+	font-weight:bold;
+	padding:6px 24px;
+	text-decoration:none;
+	text-shadow:0px 1px 0px #528ecc;
+}
+button:hover {
+	background:linear-gradient(to bottom, #378de5 5%, #79bbff 100%);
+	background-color:#378de5;
+}
+button:active {
+	position:relative;
+	top:1px;
+}
+
+        
 
 .location-preview button {
     background-color: inherit;
