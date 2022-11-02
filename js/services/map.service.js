@@ -22,6 +22,11 @@ function initMap(lat = 32.0749831, lng = 34.9120554) {
         gMap.addListener("click", (ev) => {
             const lat = ev.latLng.lat();
             const lng = ev.latLng.lng();
+            locService.addLoc(
+                { lat: lat, lng: lng },
+                prompt("Add location name")
+            );
+            addMarker({ lat: lat, lng: lng });
         });
     });
 }
