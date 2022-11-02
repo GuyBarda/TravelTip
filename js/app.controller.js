@@ -34,7 +34,11 @@ function onAddMarker() {
 }
 
 function onSearch(value) {
-    console.log(value);
+    const URL = `https://maps.googleapis.com/maps/api/geocode/json?address=${value}&key=AIzaSyB9MyL0ZCqbXp1l4x0XnTRj-8ihybmUFCY`;
+    return axios
+        .get(URL)
+        .then((res) => res)
+        .then((res) => mapService.panTo(res.data.results[0].geometry.location));
 }
 
 function onGetLocs() {
@@ -68,7 +72,7 @@ function onGetUserPos() {
             console.log("User position is:", coords);
             //prettier-ignore
             // document.querySelector(".user-pos").innerText = `Latitude: ${pos.coords.latitude} - Longitude: ${pos.coords.longitude}`;
-            mapService.panTo(coords.latitude, coords.longitude);
+            mapService.panTo({lat: coords.latitude,lng: coords.longitude});
         })
         .catch((err) => {
             console.log("err!!!", err);
