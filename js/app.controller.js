@@ -7,6 +7,7 @@ window.onPanTo = onPanTo;
 window.onGetLocs = onGetLocs;
 window.onGetUserPos = onGetUserPos;
 window.onCenter = onCenter;
+window.onDeleteLoc = onDeleteLoc;
 
 function onInit() {
     mapService
@@ -15,6 +16,7 @@ function onInit() {
             console.log("Map is ready");
         })
         .catch(() => console.log("Error: cannot init map"));
+    onGetLocs();
 }
 
 // This function provides a Promise API to the callback-based-api of getCurrentPosition
@@ -47,7 +49,7 @@ function onGetLocs() {
             </div>
             <div class="location-buttons">   
                 <button onclick="onCenter('${id}')">Center</button>
-                <button onclick="onDeleteLocation('${id}')">Delete</button>
+                <button onclick="onDeleteLoc('${id}')">Delete</button>
             </div>
         </article>`;
         });
@@ -57,11 +59,11 @@ function onGetLocs() {
 
 function onGetUserPos() {
     getPosition()
-        .then((pos) => {
-            console.log("User position is:", pos.coords);
-            document.querySelector(
-                ".user-pos"
-            ).innerText = `Latitude: ${pos.coords.latitude} - Longitude: ${pos.coords.longitude}`;
+        .then(({ coords }) => {
+            console.log("User position is:", coords);
+            //prettier-ignore
+            // document.querySelector(".user-pos").innerText = `Latitude: ${pos.coords.latitude} - Longitude: ${pos.coords.longitude}`;
+            mapService.panTo(coords.latitude, coords.longitude);
         })
         .catch((err) => {
             console.log("err!!!", err);
@@ -77,4 +79,9 @@ function onCenter(id) {
     let loc = locService.getLocById(id);
     console.log(loc);
     mapService.panTo(loc.position.lat, loc.position.lng);
+}
+
+function onDeleteLoc(id) {
+    locService.deleteLoc(id);
+    onGetLocs();
 }
