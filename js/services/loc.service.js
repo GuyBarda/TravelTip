@@ -1,6 +1,7 @@
 export const locService = {
     getLocs,
     createLoc,
+    createLocs,
 };
 
 const locs = [
@@ -16,6 +17,10 @@ function getLocs() {
     });
 }
 
+function createLocs() {
+    gLocations = loadFromStorage(locationsKey) || _getDemoLocations();
+}
+
 function createLoc(position, name) {
     return {
         id: makeId(),
@@ -23,4 +28,13 @@ function createLoc(position, name) {
         name,
         ts: Date.now(),
     };
+}
+
+function _getDemoLocations() {
+    return [
+        createLocation(
+            { lat: 31.78309673299283, lng: 34.628768380562775 },
+            "My Home"
+        ),
+    ];
 }

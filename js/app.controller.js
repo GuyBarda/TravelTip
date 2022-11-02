@@ -34,6 +34,7 @@ function onGetLocs() {
         console.log("Locations:", locs);
         let strHTMLs = locs.map(({ name, ts, id }) => {
             let minute = new Date(ts).getMinutes();
+            console.log(minute);
             let hour = new Date(ts).getHours();
             let date = new Date(ts).getDate();
             let month = new Date(ts).getMonth();
@@ -49,7 +50,7 @@ function onGetLocs() {
             </div>
         </article>`;
         });
-        document.querySelector(".location-list").innerText = strHTMLs;
+        document.querySelector(".location-list").innerHTML = strHTMLs;
     });
 }
 
