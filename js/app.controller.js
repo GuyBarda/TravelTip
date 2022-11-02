@@ -32,11 +32,24 @@ function onAddMarker() {
 function onGetLocs() {
     locService.getLocs().then((locs) => {
         console.log("Locations:", locs);
-        document.querySelector(".location-list").innerText = JSON.stringify(
-            locs,
-            null,
-            2
-        );
+        let strHTMLs = locs.map(({ name, ts, id }) => {
+            let minute = new Date(ts).getMinutes();
+            let hour = new Date(ts).getHours();
+            let date = new Date(ts).getDate();
+            let month = new Date(ts).getMonth();
+            let year = new Date(ts).getFullYear();
+            return `<article class="location-preview">
+            <div class="location-text">    
+                <h1>${name}</h1>
+                <h2>${date}/${month}/${year}, ${hour}:${minute}</h2>
+            </div>
+            <div class="location-buttons">   
+                <button onclick="onCenter('${id}')"><i class="fa fa-location-arrow"></i></button>
+                <button onclick="onDeleteLocation('${id}')"><i class="fa fa-trash"></i></button>
+            </div>
+        </article>`;
+        });
+        document.querySelector(".location-list").innerText = strHTMLs;
     });
 }
 
