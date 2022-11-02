@@ -9,13 +9,14 @@ window.onGetUserPos = onGetUserPos;
 window.onCenter = onCenter;
 window.onDeleteLoc = onDeleteLoc;
 window.onSearch = onSearch;
+window.onCopyLink = onCopyLink;
 
 function onInit() {
+    let position = centerByQueryStringParams();
+    console.log(position);
     mapService
-        .initMap()
-        .then(() => {
-            console.log("Map is ready");
-        })
+        .initMap(position?.lat, position?.lng)
+        .then(() => console.log("Map is ready"))
         .catch(() => console.log("Error: cannot init map"));
     onGetLocs();
 }
@@ -44,7 +45,7 @@ function onSearch(value) {
 function onGetLocs() {
     locService.getLocs().then((locs) => {
         console.log("Locations:", locs);
-        let strHTMLs = locs.map(({ name, ts, id }) => {
+        let strHTMLs = locs.map(({ name, ts, id, position }) => {
             let minute = new Date(ts).getMinutes();
             console.log(minute);
             let hour = new Date(ts).getHours();
@@ -59,6 +60,7 @@ function onGetLocs() {
             <div class="location-buttons">   
                 <button onclick="onCenter('${id}')">Center</button>
                 <button onclick="onDeleteLoc('${id}')">Delete</button>
+                <button onclick="onCopyLink('${id}')">Copy link</button>
             </div>
         </article>`;
         });
@@ -79,6 +81,20 @@ function onGetUserPos() {
         });
 }
 
+function onCopyLink(id) {
+    let { position } = locService.getLocById(id);
+    const queryStringParams = `?lat=${position.lat}&lng=${position.lng}`;
+    const newUrl =
+        window.location.protocol +
+        "//" +
+        window.location.host +
+        window.location.pathname +
+        queryStringParams;
+    // window.history.pushState({ path: newUrl }, "", newUrl);
+    navigator.clipboard.writeText(newUrl);
+    console.log(newUrl);
+}
+
 function onPanTo() {
     console.log("Panning the Map");
     mapService.panTo({ lat: 35.6895, lng: 139.6917 });
@@ -93,4 +109,16 @@ function onCenter(id) {
 function onDeleteLoc(id) {
     locService.deleteLoc(id);
     onGetLocs();
+}
+
+function centerByQueryStringParams() {
+    const queryStringParams = new URLSearchParams(window.location.search);
+    const position = {
+        lat: +queryStringParams.get("lat") || 0,
+        lng: +queryStringParams.get("lng") || 0,
+    };
+
+    if (!position.lat && !position.lng) return;
+
+    return position;
 }
