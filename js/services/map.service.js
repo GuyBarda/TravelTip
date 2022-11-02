@@ -26,22 +26,17 @@ function initMap(lat = 32.0749831, lng = 34.9120554) {
     infoWindow.open(gMap)
 
     gMap.addListener('click', (ev) => {
-      console.log('ev', ev)
       const lat = ev.latLng.lat()
       const lng = ev.latLng.lng()
-      console.log('lat, lng', lat, lng)
       infoWindow = new google.maps.InfoWindow({
         position: ev.latLng,
       })
-
-      infoWindow.setContent(
-        JSON.stringify(ev.latLng.toJSON(), null, 2)
-      );
-      infoWindow.open(gMap);
-    });
+      console.log(JSON.stringify(_getGeoLocationApi(lat, lng), null, 2))
+        infoWindow.setContent(_getGeoLocationApi(lat, lng))
+      infoWindow.open(gMap)
     })
-  }
-
+  })
+}
 
 function renderMarkers() {
   let locs = locService.getLocs()
@@ -81,4 +76,13 @@ function _connectGoogleApi() {
     elGoogleApi.onload = resolve
     elGoogleApi.onerror = () => reject('Google script failed to load')
   })
+}
+
+function _getGeoLocationApi(lat, lng) {
+  const URL = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=AIzaSyB9MyL0ZCqbXp1l4x0XnTRj-8ihybmUFCY
+    `
+  return axios
+    .get(URL)
+    .then((res) => res)
+    .then((res) => res.data.results[0].formatted_address)
 }
