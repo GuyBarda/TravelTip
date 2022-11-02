@@ -1,3 +1,5 @@
+import { locService } from "./loc.service.js";
+
 export const mapService = {
     initMap,
     addMarker,
@@ -16,6 +18,20 @@ function initMap(lat = 32.0749831, lng = 34.9120554) {
             zoom: 15,
         });
         console.log("Map!", gMap);
+
+        // renderMarkers();
+    });
+}
+
+function renderMarkers() {
+    let locs = locService.getLocs();
+    console.log(`give me pos ${locs[0].position}`);
+    locs.forEach((loc) => {
+        var marker = new google.maps.Marker({
+            position: loc.position,
+            map: gMap,
+            title: loc.name,
+        });
     });
 }
 

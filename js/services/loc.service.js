@@ -1,40 +1,46 @@
+import { utility } from "../utility.js";
+
 export const locService = {
     getLocs,
     createLoc,
     createLocs,
+    getLocById,
 };
 
-const locs = [
-    { name: "Greatplace", lat: 32.047104, lng: 34.832384 },
-    { name: "Neveragain", lat: 32.047201, lng: 34.832581 },
-];
+const locs = getDemoLocations();
 
 function getLocs() {
-    return new Promise((resolve, reject) => {
-        setTimeout(() => {
-            resolve(locs);
-        }, 2000);
-    });
+    return new Promise((resolve, reject) =>
+        setTimeout(() => resolve(locs), 1000)
+    );
 }
 
 function createLocs() {
-    gLocations = loadFromStorage(locationsKey) || _getDemoLocations();
+    gLocations = loadFromStorage(locationsKey) || getDemoLocations();
 }
 
 function createLoc(position, name) {
     return {
-        id: makeId(),
+        id: utility.makeId(),
         position,
         name,
         ts: Date.now(),
     };
 }
 
-function _getDemoLocations() {
+function getLocById(locId) {
+    return locs.find((loc) => loc.id === locId);
+}
+
+function getDemoLocations() {
     return [
-        createLocation(
+        createLoc(
             { lat: 31.78309673299283, lng: 34.628768380562775 },
-            "My Home"
+            "GreatPlace"
+        ),
+        createLoc(
+            { lat: 31.78309673299283, lng: 34.628768380562775 },
+            "NeverAgain"
         ),
     ];
 }
