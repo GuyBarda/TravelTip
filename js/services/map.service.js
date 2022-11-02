@@ -10,14 +10,17 @@ export const mapService = {
 var gMap;
 
 function initMap(lat = 32.0749831, lng = 34.9120554) {
-    console.log("InitMap", lat, lng);
     return _connectGoogleApi().then(() => {
-        console.log("google available");
         gMap = new google.maps.Map(document.querySelector("#map"), {
             center: { lat, lng },
             zoom: 15,
         });
-        console.log("Map!", gMap);
+
+        locService
+            .getLocs()
+            .then((data) =>
+                data.forEach(({ position }) => addMarker(position))
+            );
 
         gMap.addListener("click", (ev) => {
             const lat = ev.latLng.lat();
@@ -31,21 +34,9 @@ function initMap(lat = 32.0749831, lng = 34.9120554) {
     });
 }
 
-function renderMarkers() {
-    let locs = locService.getLocs();
-    console.log(`give me pos ${locs[0].position}`);
-    locs.forEach((loc) => {
-        var marker = new google.maps.Marker({
-            position: loc.position,
-            map: gMap,
-            title: loc.name,
-        });
-    });
-}
-
-function addMarker(loc) {
+function addMarker(position) {
     var marker = new google.maps.Marker({
-        position: loc,
+        position,
         map: gMap,
         title: "Hello World!",
     });
