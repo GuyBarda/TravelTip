@@ -5,9 +5,11 @@ export const locService = {
     createLoc,
     createLocs,
     getLocById,
+    deleteLoc,
+    addLoc,
 };
 
-const locs = getDemoLocations();
+let locs = getDemoLocations();
 
 function getLocs() {
     return new Promise((resolve, reject) =>
@@ -16,7 +18,7 @@ function getLocs() {
 }
 
 function createLocs() {
-    gLocations = loadFromStorage(locationsKey) || getDemoLocations();
+    // locs = loadFromStorage(locationsKey) || getDemoLocations();
 }
 
 function createLoc(position, name) {
@@ -30,6 +32,16 @@ function createLoc(position, name) {
 
 function getLocById(locId) {
     return locs.find((loc) => loc.id === locId);
+}
+
+function addLoc(position, name) {
+    const location = createLocation(position, name);
+    locs.push(location);
+}
+
+function deleteLoc(locId) {
+    locs = locs.filter((loc) => loc.id !== locId);
+    console.log(locs);
 }
 
 function getDemoLocations() {
