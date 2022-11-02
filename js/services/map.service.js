@@ -1,5 +1,6 @@
 import { locService } from './loc.service.js'
 
+
 export const mapService = {
   initMap,
   addMarker,
@@ -10,18 +11,18 @@ export const mapService = {
 var gMap
 
 function initMap(lat = 32.0749831, lng = 34.9120554) {
-  console.log('InitMap')
   return _connectGoogleApi().then(() => {
     console.log('google available')
     gMap = new google.maps.Map(document.querySelector('#map'), {
       center: { lat, lng },
       zoom: 15,
     })
-    console.log('Map!', gMap)
-
+  
         gMap.addListener("click", (ev) => {
             const lat = ev.latLng.lat();
             const lng = ev.latLng.lng();
+            locService.addLoc({lat: lat, lng: lng} , prompt('Add location name'))  
+            addMarker({lat: lat, lng: lng})
         });
     });
 }
