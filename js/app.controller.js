@@ -33,7 +33,9 @@ function onAddMarker() {
     mapService.addMarker({ lat: 32.0749831, lng: 34.9120554 });
 }
 
-function onSearch(value) {}
+function onSearch(value) {
+    console.log(value);
+}
 
 function onGetLocs() {
     locService.getLocs().then((locs) => {
@@ -66,7 +68,7 @@ function onGetUserPos() {
             console.log("User position is:", coords);
             //prettier-ignore
             // document.querySelector(".user-pos").innerText = `Latitude: ${pos.coords.latitude} - Longitude: ${pos.coords.longitude}`;
-            mapService.panTo(coords.latitude, coords.longitude);
+            mapService.panTo(coords);
         })
         .catch((err) => {
             console.log("err!!!", err);
@@ -75,13 +77,13 @@ function onGetUserPos() {
 
 function onPanTo() {
     console.log("Panning the Map");
-    mapService.panTo(35.6895, 139.6917);
+    mapService.panTo({ lat: 35.6895, lng: 139.6917 });
 }
 
 function onCenter(id) {
     let loc = locService.getLocById(id);
     console.log(loc);
-    mapService.panTo(loc.position.lat, loc.position.lng);
+    mapService.panTo(loc.position);
 }
 
 function onDeleteLoc(id) {
