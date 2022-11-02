@@ -68,7 +68,7 @@ function onGetUserPos() {
             console.log("User position is:", coords);
             //prettier-ignore
             // document.querySelector(".user-pos").innerText = `Latitude: ${pos.coords.latitude} - Longitude: ${pos.coords.longitude}`;
-            mapService.panTo(coords);
+            mapService.panTo(coords.latitude, coords.longitude);
         })
         .catch((err) => {
             console.log("err!!!", err);
