@@ -19,20 +19,18 @@ function initMap(lat = 32.0749831, lng = 34.9120554) {
         });
         console.log("Map!", gMap);
 
-        gMap.addListener('click', ev => {
-            console.log('ev', ev);
-            const name = prompt('Place name?', 'New Place')
+        gMap.addListener("click", (ev) => {
+            console.log("ev", ev);
+            const name = prompt("Place name?", "New Place");
             // const { latLng: { lat, lng } } = ev
             //    const { latLng } = ev
-            const lat = ev.latLng.lat()
-            const lng = ev.latLng.lng()
-            console.log('lat, lng', lat, lng);
-            addPlace(name, lat, lng, gMap.getZoom())
-            renderPlaces()
-        })
+            const lat = ev.latLng.lat();
+            const lng = ev.latLng.lng();
+            console.log("lat, lng", lat, lng);
+            addPlace(name, lat, lng, gMap.getZoom());
+            renderPlaces();
+        });
     });
-    
-    
 }
 
 function renderMarkers() {
@@ -46,6 +44,7 @@ function renderMarkers() {
         });
     });
 }
+
 function addMarker(loc) {
     var marker = new google.maps.Marker({
         position: loc,

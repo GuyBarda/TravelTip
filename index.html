@@ -10,7 +10,7 @@
     <header>
         <h1>TravelTip Starter</h1>
         <div class="search">
-            <input type="text" class="search-input" placeholder="Enter a location">
+            <input type="text" class="search-input" onchange="onSearch(this.value)" placeholder="Enter a location">
             <button onclick="onGetUserPos()" class="btn-user-pos">My location</button>
         </div>
     </header>
