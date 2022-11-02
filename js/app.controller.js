@@ -38,7 +38,7 @@ function onSearch(value) {
   return axios
     .get(URL)
     .then((res) => res)
-    .then((res) => mapService.panTo(res.data.results[0].geometry.location.lat, ) )
+    .then((res) => mapService.panTo(res.data.results[0].geometry.location))
 }
 
 function onGetLocs() {
@@ -72,7 +72,7 @@ function onGetUserPos() {
       console.log('User position is:', coords)
       //prettier-ignore
       // document.querySelector(".user-pos").innerText = `Latitude: ${pos.coords.latitude} - Longitude: ${pos.coords.longitude}`;
-      mapService.panTo(coords.latitude, coords.longitude);
+      mapService.panTo({lat: coords.latitude,lng: coords.longitude});
     })
     .catch((err) => {
       console.log('err!!!', err)
@@ -81,13 +81,13 @@ function onGetUserPos() {
 
 function onPanTo() {
   console.log('Panning the Map')
-  mapService.panTo(35.6895, 139.6917)
+  mapService.panTo({ lat: 35.6895, lng: 139.6917 })
 }
 
 function onCenter(id) {
   let loc = locService.getLocById(id)
   console.log(loc)
-  mapService.panTo(loc.position.lat, loc.position.lng)
+  mapService.panTo(loc.position)
 }
 
 function onDeleteLoc(id) {
