@@ -6,6 +6,7 @@ window.onAddMarker = onAddMarker;
 window.onPanTo = onPanTo;
 window.onGetLocs = onGetLocs;
 window.onGetUserPos = onGetUserPos;
+window.onCenter = onCenter;
 
 function onInit() {
     mapService
@@ -45,12 +46,12 @@ function onGetLocs() {
                 <h2>${date}/${month}/${year}, ${hour}:${minute}</h2>
             </div>
             <div class="location-buttons">   
-                <button onclick="onCenter('${id}')"><i class="fa fa-location-arrow"></i></button>
-                <button onclick="onDeleteLocation('${id}')"><i class="fa fa-trash"></i></button>
+                <button onclick="onCenter('${id}')">Center</button>
+                <button onclick="onDeleteLocation('${id}')">Delete</button>
             </div>
         </article>`;
         });
-        document.querySelector(".location-list").innerHTML = strHTMLs;
+        document.querySelector(".location-list").innerHTML = strHTMLs.join("");
     });
 }
 
@@ -70,4 +71,10 @@ function onGetUserPos() {
 function onPanTo() {
     console.log("Panning the Map");
     mapService.panTo(35.6895, 139.6917);
+}
+
+function onCenter(id) {
+    let loc = locService.getLocById(id);
+    console.log(loc);
+    mapService.panTo(loc.position.lat, loc.position.lng);
 }
