@@ -16,21 +16,9 @@ function initMap(lat = 32.0749831, lng = 34.9120554) {
             zoom: 15,
         });
 
-        locService
-            .getLocs()
-            .then((data) =>
-                data.forEach(({ position }) => addMarker(position))
-            );
-
-        gMap.addListener("click", (ev) => {
-            const lat = ev.latLng.lat();
-            const lng = ev.latLng.lng();
-            locService.addLoc(
-                { lat: lat, lng: lng },
-                prompt("Add location name")
-            );
-            addMarker({ lat: lat, lng: lng });
-        });
+        //prettier-ignore
+        locService.getLocs().then((data) =>data.forEach(({ position }) => addMarker(position)));
+        return gMap;
     });
 }
 
@@ -60,13 +48,4 @@ function _connectGoogleApi() {
         elGoogleApi.onload = resolve;
         elGoogleApi.onerror = () => reject("Google script failed to load");
     });
-}
-
-function _getGeoLocationApi(lat, lng) {
-    const URL = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=AIzaSyB9MyL0ZCqbXp1l4x0XnTRj-8ihybmUFCY
-    `;
-    return axios
-        .get(URL)
-        .then((res) => res)
-        .then((res) => res.data.results[0].formatted_address);
 }

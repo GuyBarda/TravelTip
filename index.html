@@ -1,30 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./css/style.css">
-    <title>TravelTip</title>
-</head>
-<body >
-    <header>
-        <h1>TravelTip</h1>
-        <div class="search">
-            <input type="text" class="search-input" onchange="onSearch(this.value)" placeholder="Enter a location">
-            <button onclick="onGetUserPos()" class="btn-user-pos">My location</button>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" href="./css/style.css" />
+        <title>TravelTip</title>
+    </head>
+    <body>
+        <header>
+            <h1>TravelTip</h1>
+            <div class="search">
+                <input
+                    type="text"
+                    class="search-input"
+                    onchange="onSearch(this.value)"
+                    placeholder="Enter a location"
+                />
+                <button onclick="onGetUserPos()" class="btn-user-pos">
+                    My location
+                </button>
+            </div>
+        </header>
+        <button onclick="onAddMarker()" class="btn-add-marker">
+            Add Marker Speific Location
+        </button>
+        <!-- <button onclick="onGetLocs()" class="btn-get-locs">Get Locations</button> -->
+        <button onclick="onPanTo()" class="btn-pan">Pan Map to Tokyo</button>
+        <div class="container">
+            <div id="map"></div>
+            <div class="location-list"></div>
         </div>
-    </header>
-    <button onclick="onAddMarker()" class="btn-add-marker">Add Marker Speific Location</button>
-    <!-- <button onclick="onGetLocs()" class="btn-get-locs">Get Locations</button> -->
-    <button onclick="onPanTo()"class="btn-pan">Pan Map to Tokyo</button>
-    <div class="container">
-        <div id="map"></div>
-        <div class="location-list">
-        </div>
-    </div>
 
-    
-<script src="lib/axios.js"></script>
-    <script type="module" src="js/app.controller.js"></script>
-</body>
+        <script src="lib/axios.js"></script>
+        <script type="module" src="js/app.controller.js"></script>
+    </body>
 </html>

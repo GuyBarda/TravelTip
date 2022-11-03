@@ -16,7 +16,15 @@ window.onCopyLink = onCopyLink;
 
 function onInit() {
     let position = centerByQueryStringParams();
-    mapService.initMap(position?.lat, position?.lng);
+    mapService.initMap(position?.lat, position?.lng).then((map) => {
+        console.log(map);
+        map.addListener("click", (ev) => {
+            const position = ev.latLng.toJSON();
+            locService.addLoc(position, prompt("Add location name"));
+            mapService.addMarker(position);
+            onGetLocs();
+        });
+    });
     onGetLocs();
 }
 
@@ -66,14 +74,10 @@ function onGetLocs() {
 function onGetUserPos() {
     getPosition()
         .then(({ coords }) => {
-            console.log("User position is:", coords);
-            //prettier-ignore
-            // document.querySelector(".user-pos").innerText = `Latitude: ${pos.coords.latitude} - Longitude: ${pos.coords.longitude}`;
-            mapService.panTo({lat: coords.latitude,lng: coords.longitude});
+            const { latitude: lat, longitude: lng } = coords;
+            mapService.panTo({ lat, lng });
         })
-        .catch((err) => {
-            console.log("err!!!", err);
-        });
+        .catch((err) => console.log("error!", err));
 }
 
 function onCopyLink(id) {
@@ -85,19 +89,15 @@ function onCopyLink(id) {
         window.location.host +
         window.location.pathname +
         queryStringParams;
-    // window.history.pushState({ path: newUrl }, "", newUrl);
     navigator.clipboard.writeText(newUrl);
-    console.log(newUrl);
 }
 
 function onPanTo() {
-    console.log("Panning the Map");
     mapService.panTo({ lat: 35.6895, lng: 139.6917 });
 }
 
 function onCenter(id) {
     let loc = locService.getLocById(id);
-    console.log(loc);
     mapService.panTo(loc.position);
 }
 

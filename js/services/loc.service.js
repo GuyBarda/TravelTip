@@ -1,23 +1,19 @@
 import { utility } from "../utility.js";
-import { controller } from "../app.controller.js";
 import { storageService } from "../storage-service.js";
+
 export const locService = {
     getLocs,
     createLoc,
-    createLocs,
     getLocById,
     deleteLoc,
     addLoc,
 };
+
 const STORAGE_KEY = "locDB";
 let locs = storageService.load(STORAGE_KEY) || getDemoLocations();
 
 function getLocs() {
     return new Promise((resolve) => setTimeout(() => resolve(locs), 1000));
-}
-
-function createLocs() {
-    // locs = loadFromStorage(locationsKey) || getDemoLocations();
 }
 
 function createLoc(position, name) {
@@ -35,13 +31,13 @@ function getLocById(locId) {
 
 function addLoc(position, name) {
     const location = createLoc(position, name);
-    locs.push(location);
+    locs.unshift(location);
     storageService.save(STORAGE_KEY, locs);
-    controller.onGetLocs();
 }
 
 function deleteLoc(locId) {
     locs = locs.filter((loc) => loc.id !== locId);
+    storageService.save(STORAGE_KEY, locs);
 }
 
 function getDemoLocations() {
